@@ -1,0 +1,49 @@
+name: Backfill PCB Flags (Wayback)
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_year:
+        description: "Start year (e.g., 2022)"
+        required: true
+        default: "2022"
+      to_year:
+        description: "End year inclusive (e.g., 2025)"
+        required: true
+        default: "2025"
+      months:
+        description: "Comma-separated months to include (e.g., 5,6,7,8). Leave blank for all months."
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+      - name: Run backfill
+        run: |
+          python backfill_from_wayback.py --from-year "${{ github.event.inputs.from_year }}" --to-year "${{ github.event.inputs.to_year }}" --months "${{ github.event.inputs.months }}"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add pcb_flags_historical.csv
+            git commit -m "backfill: wayback ${{
+              github.event.inputs.from_year }}-${{ github.event.inputs.to_year }} months=${{
+              github.event.inputs.months }}"
+            git push
+          else
+            echo "No changes to commit."
+          fi
