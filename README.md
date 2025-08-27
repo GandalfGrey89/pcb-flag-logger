@@ -2,6 +2,10 @@
 
 Automatically records the daily beach flag status for Panama City Beach, FL.
 
+![PCB Flag](https://github.com/<you>/<repo>/actions/workflows/pcb_flag_logger.yml/badge.svg)
+![NOAA SRF](https://github.com/<you>/<repo>/actions/workflows/noaa_pcb_srf_logger.yml/badge.svg)
+
+
 ## What it does
 - Scrapes the PCB official flag widget once per day.
 - Logs the result to `pcb_flags.csv` as:
