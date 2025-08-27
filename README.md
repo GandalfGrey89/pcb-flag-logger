@@ -2,7 +2,7 @@
 
 Automatically records the daily beach flag status for Panama City Beach, FL.
 
-![PCB Flag](https://github.com/<you>/<repo>/actions/workflows/pcb_flag_logger.yml/badge.svg)
+![PCB Flag](https://github.com/GandalfGrey89/pcb-flag-logger/actions/workflows/pcb_flag_logger.yml/badge.svg)
 ![NOAA SRF](https://github.com/<you>/<repo>/actions/workflows/noaa_pcb_srf_logger.yml/badge.svg)
 
 
